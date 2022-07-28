@@ -1,60 +1,36 @@
-import React from 'react';
-import Style from './About.module.scss';
-import Terminal from "./Terminal";
-import {Box} from "@mui/material";
-import {info} from "../../info/Info";
+import React, { useContext } from 'react';
+
+import './About.css';
+import { ThemeContext } from '../../contexts/ThemeContext';
+import { aboutData } from '../../data/aboutData'
 
 
-export default function About() {
-    const firstName = info.firstName.toLowerCase()
 
-    function aboutMeText() {
-        return <>
-            <p><span style={{color: info.baseColor}}>{firstName}{info.lastName.toLowerCase()} $</span> cat
-                about{firstName} </p>
-            <p><span style={{color: info.baseColor}}>about{firstName} <span
-                className={Style.green}>(main)</span> $ </span>
-                {info.bio}
-            </p>
-        </>;
-    }
+function About() {
 
-    function skillsText() {
-        return <>
-            <p><span style={{color: info.baseColor}}>{firstName}{info.lastName.toLowerCase()} $</span> cd skills/tools
-            </p>
-            <p><span style={{color: info.baseColor}}>skills/tools <span
-                className={Style.green}>(main)</span> $</span> ls</p>
-            <p style={{color: info.baseColor}}> Proficient With</p>
-            <ul className={Style.skills}>
-                {info.skills.proficientWith.map((proficiency, index) => <li key={index}>{proficiency}</li>)}
-            </ul>
-            <p style={{color: info.baseColor}}> Exposed To</p>
-            <ul className={Style.skills}>
-                {info.skills.exposedTo.map((skill, index) => <li key={index}>{skill}</li>)}
-            </ul>
-        </>;
-    }
-
-    function miscText() {
-        return <>
-            <p><span style={{color: info.baseColor}}>{firstName}{info.lastName.toLowerCase()} $</span> cd
-                hobbies/interests</p>
-            <p><span style={{color: info.baseColor}}>hobbies/interests <span
-                className={Style.green}>(main)</span> $</span> ls</p>
-            <ul>
-                {info.hobbies.map((hobby, index) => (
-                    <li key={index}><Box component={'span'} mr={'1rem'}>{hobby.emoji}</Box>{hobby.label}</li>
-                ))}
-            </ul>
-        </>;
-    }
-
+    const { theme } = useContext(ThemeContext);
     return (
-        <Box display={'flex'} flexDirection={'column'} alignItems={'center'} mt={'3rem'}>
-            <Terminal text={aboutMeText()}/>
-            <Terminal text={skillsText()}/>
-            <Terminal text={miscText()}/>
-        </Box>
+        <div className="about" id="about" style={{backgroundColor: theme.secondary}}>
+            <div className="line-styling">
+              <div className="style-circle" style={{backgroundColor: theme.primary}}></div>
+              <div className="style-circle" style={{backgroundColor: theme.primary}}></div>
+              <div className="style-line" style={{backgroundColor: theme.primary}}></div>
+            </div>
+            <div className="about-body">
+                <div className="about-description">
+                    <h2 style={{color: theme.primary}}>{aboutData.title}</h2>
+                    <p style={{color:theme.tertiary80}}>{aboutData.description1}<br/><br/>{aboutData.description2}</p>
+                </div>
+                <div className="about-img">
+                    <img 
+                        src={aboutData.image === 1 ? theme.aboutimg1 : theme.aboutimg2}  
+                        alt="" 
+                    />
+                </div>
+            </div>
+        </div>
+
     )
 }
+
+export default About
